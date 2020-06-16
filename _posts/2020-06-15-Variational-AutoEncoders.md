@@ -15,7 +15,7 @@ tags:								#标签
 
 # Variational AutoEncoders
 
->  As a technique emerged years ago, VAE has been proved to have a broad application in the field of data generation and be effetive in genearting complicated data. This post aims at discover the math behind VAE.
+>  As a technique emerged years ago, VAE has been proved to have a broad application in the field of data generation and be effetive in genearting complicated data. This post aims at discovering the math behind VAE.
 
 ## 1. Latent Variables
 
