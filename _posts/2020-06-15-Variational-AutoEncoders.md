@@ -238,3 +238,7 @@ The second idea is now that $$P(\mathbf{X} \vert z)$$ is a Gaussian $$\mathcal{N
 [4]. UC Berkeley CS 189 Note 14
 
 [5]. Luc Devroye. Sample-based non-uniform random variate generation. Springer-Verlag, New York, 1986.
+
+****
+
+For Chinese version of this blog, please refer to: https://blog.csdn.net/weixin_42604713/article/details/105024384
