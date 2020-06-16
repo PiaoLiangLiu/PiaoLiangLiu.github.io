@@ -219,10 +219,10 @@ $$-log(P(X))$$ can be viewed as the information required to reconstruct a datapo
 
 + Reconstruct $$X$$ according $$z$$. $$\mathbb{E}_{z\sim Q}[log(P(X \vert z)]$$  can be viewed as the amount information required to reconstruct $$X$$ given $$z$$
 
-+ Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say we use some information to estimate $$P(z \vert  X)$$ which is also involved in the whole amount of information to reconstruct the image so we should extract this part: $$\mathcal{D}[Q(z \vert X)||P(z \vert X)]$$
++ Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say we use some information to estimate $$P(z \vert  X)$$ which is also involved in the whole amount of information to reconstruct the image. So we should extract this part out: $$\mathcal{D}[Q(z \vert X)\vert \vert P(z \vert X)]$$
 
 ### 4.2 Regularization Perspective
-Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X)\vert \vert P(z \vert  X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
+Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X) \vert \vert P(z \vert  X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
 
 The first idea is that we can take the variance of $$P(z)$$ as a hyperparameter. Actually it is not true. Modifying the variance of $$P(z)$$ cannot change this model since as mentioned in section 3.1, we can map a d-dimensional Gaussian to an arbitrary distribution. Although the real underlying latent variable distribution is not standard Gaussian, we can map a standard Gaussian through the following layer to it.
 
