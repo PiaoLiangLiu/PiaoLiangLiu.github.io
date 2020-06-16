@@ -57,17 +57,17 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
-# disqus_username: qiubaiying
+disqus_username: disqus_ykC55zb4yc
 
-# Gitalk
-gitalk:
-  enable: true    #是否开启Gitalk评论
-  clientID: ea526965f54b272d199c                           #生成的clientID
-  clientSecret: 0f715ada3a802ed4919774f135a0b0de741b0b90    #生成的clientSecret
-  repo: piaoliangliu.github.io    #仓库名称
-  owner: piaoliangliu    #github用户名
-  admin: piaoliangliu
-  distractionFreeMode: true #是否启用类似FB的阴影遮罩
+# # Gitalk
+# gitalk:
+#   enable: true    #是否开启Gitalk评论
+#   clientID: ea526965f54b272d199c                           #生成的clientID
+#   clientSecret: 0f715ada3a802ed4919774f135a0b0de741b0b90    #生成的clientSecret
+#   repo: piaoliangliu.github.io    #仓库名称
+#   owner: piaoliangliu    #github用户名
+#   admin: piaoliangliu
+#   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
 # 统计
