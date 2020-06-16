@@ -1,10 +1,10 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
-title:      My First Post 				# 标题 
-subtitle:   Hello World, Hello Blog #副标题
+title:      Variational AutoEncoders 				# 标题 
+subtitle:   Generative Model #副标题
 date:       2020-06-15 				# 时间
 author:     LiuPiaoLiang 						# 作者
-header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
+header-img: img/post-bg-universe.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
 tags:								#标签
     - deeplearning
@@ -120,7 +120,7 @@ $$
 &=\mathbb{E}_{z\sim Q}[log(Q(z|X))]-\mathbb{E}_{z\sim Q}[log(P(X|z))+log(P(z))]+log(P(X))\\
 \end{aligned}
 $$
-Aha, here they are: $$P(X), \; P(X|z)$$
+Aha, here they are: $$P(X), \; P(X \vert z)$$
 
 
 
@@ -219,10 +219,10 @@ $$-log(P(X))$$ can be viewed as the information required to reconstruct a datapo
 
 + Reconstruct $$X$$ according $$z$$. $$\mathbb{E}_{z\sim Q}[log(P(X \vert z)]$$  can be viewed as the amount information required to reconstruct $$X$$ given $$z$$
 
-+ Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say we use some information to estimate $P(z \vert  X)$ which is also involved in the whole amount of information to reconstruct the image so we should extract this part: $$\mathcal{D}[Q(z \vert X)||P(z \vert X)]$$
++ Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say we use some information to estimate $$P(z \vert  X)$$ which is also involved in the whole amount of information to reconstruct the image so we should extract this part: $$\mathcal{D}[Q(z \vert X)||P(z \vert X)]$$
 
 ### 4.2 Regularization Perspective
-Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X)||P(z \vert X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
+Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X)||P(z \vert  X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
 
 The first idea is that we can take the variance of $$P(z)$$ as a hyperparameter. Actually it is not true. Modifying the variance of $$P(z)$$ cannot change this model since as mentioned in section 3.1, we can map a d-dimensional Gaussian to an arbitrary distribution. Although the real underlying latent variable distribution is not standard Gaussian, we can map a standard Gaussian through the following layer to it.
 
