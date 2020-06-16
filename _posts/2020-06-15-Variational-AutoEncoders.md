@@ -2,7 +2,7 @@
 layout:     post   				    # 使用的布局（不需要改）
 title:      Variational AutoEncoders 				# 标题 
 subtitle:   Generative Model #副标题
-date:       2020-06-15 				# 时间
+date:       2020-06-16 				# 时间
 author:     LiuPiaoLiang 						# 作者
 header-img: img/post-bg-universe.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
