@@ -79,7 +79,7 @@ $$
 $$
 
 
-So we can sample over $z$ : $\{z_1,z_2...z_n\}$ and then calculate:
+So we can sample over $$z$$ : $$\{z_1,z_2...z_n\}$$ and then calculate:
 
 
 $$
@@ -94,7 +94,7 @@ But actually this method doesn't actually work because it requires a huge numer 
 Therefore, we need figure out another way.
 
 ### 3.3 Setting Up the Objective Function
-The reason why the previous method doesn't work is it requires too many data points. For the majority of the $$z_i$$'s sampled from standard Gaussian distribution, $$P(X|z_i)\approx 0$$ which has nearly no impact over $$P(\mathbf{X})$$, having low data efficiency. So a natural consideration is that can we get a conditional pdf $$Q(z|X)$$yielding high data efficiency of sampling $$z$$ from it and we could calculate $$\mathbb{E}_{z}[P(X|z)]$$ more efficiently with it.
+The reason why the previous method doesn't work is it requires too many data points. For the majority of the $$z_i$$'s sampled from standard Gaussian distribution, $$P(X \vert  z_i)\approx 0$$ which has nearly no impact over $$P(\mathbf{X})$$, having low data efficiency. So a natural consideration is that can we get a conditional pdf $$Q(z\vert X)$$yielding high data efficiency of sampling $$z$$ from it and we could calculate $$\mathbb{E}_{z}[P(X\vert z)]$$ more efficiently with it.
 
 
 
@@ -124,7 +124,7 @@ Aha, here they are: $$P(X), \; P(X \vert z)$$
 
 
 
-Our target is to $$\max P(X)$$ and we need to $$\min \mathcal{D}[Q(z\vert X)||P(z \vert X)]$$ to approximate the expectation. Unfortunately, it is impossible to optimize over it since we don't know $$P(z \vert X)$$. 
+Our target is to $$\max P(X)$$ and we need to $$\min \mathcal{D}[Q(z\vert X)\vert \vert P(z \vert X)]$$ to approximate the expectation. Unfortunately, it is impossible to optimize over it since we don't know $$P(z \vert X)$$. 
 
 
 
@@ -222,7 +222,7 @@ $$-log(P(X))$$ can be viewed as the information required to reconstruct a datapo
 + Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say we use some information to estimate $$P(z \vert  X)$$ which is also involved in the whole amount of information to reconstruct the image so we should extract this part: $$\mathcal{D}[Q(z \vert X)||P(z \vert X)]$$
 
 ### 4.2 Regularization Perspective
-Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X)||P(z \vert  X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
+Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X)\vert \vert P(z \vert  X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
 
 The first idea is that we can take the variance of $$P(z)$$ as a hyperparameter. Actually it is not true. Modifying the variance of $$P(z)$$ cannot change this model since as mentioned in section 3.1, we can map a d-dimensional Gaussian to an arbitrary distribution. Although the real underlying latent variable distribution is not standard Gaussian, we can map a standard Gaussian through the following layer to it.
 
