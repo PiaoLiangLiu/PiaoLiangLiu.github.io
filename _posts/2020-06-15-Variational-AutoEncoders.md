@@ -19,7 +19,7 @@ tags:								#标签
 
 ## 1. Latent Variables
 
-Latent Variable is a critical concept in machine learning which supports a lot of model rooting in probability. It is something invisible but represents the information, something closer to the essence, behind the objects in the world. 
+Latent Variable is a critical concept in machine learning which supports a lot of model root in probability. It is something invisible but represents the information, something closer to the essence, behind the objects in the world. 
 
 Taking recgonizing a hand-written digit image as an example. How could a computer recognize a hand-written digit image given that it is only able to understand the pixels of the input images? That is where we need the latent variables to teach the computer:
 
