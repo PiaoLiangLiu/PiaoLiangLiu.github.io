@@ -15,23 +15,23 @@ tags:								#标签
 
 # Variational AutoEncoders
 
->  As a technique emerged years ago, VAE has been proved to have a broad application in the field of data generation and be effetive in genearting complicated data. This post aims at discovering the math behind VAE.
+>  As a technique emerged years ago, VAE has been proved to have a broad application in the field of data generation and be effetive in generating complicated data. This post aims at discovering the math behind VAE.
 
 ## 1. Latent Variables
 
-Latent Variable is a critical concept in machine learning which supports a lot of model root in probability. It is something invisible but represents the information, something closer to the essence, behind the objects in the world. 
+Latent Variable is a critical concept in machine learning which supports a lot of model root in probability. It is something invisible but represents the information, closer to the essence, behind the objects in the world. 
 
 Taking recgonizing a hand-written digit image as an example. How could a computer recognize a hand-written digit image given that it is only able to understand the pixels of the input images? That is where we need the latent variables to teach the computer:
 
-When we input the images into the neural network, it extracts feature spontaneously. This behavior is "capsulated" inside the neural network so we don't know exactly what feature it extracts from this image, eg. number, stroke , actually the features are usually more uninterpretable than these. We can only tell the network whether the classification result is correct/incorrect and to which extent it is correct/incorrect. According to our instructions, it further extracts the features from the images and makes decisions based on these features. This feature is an estimated distribution of latent variables and this process of getting the feature is called **encode**. Note that the example above is just given to make the concept easy to understand. In the real world, people usually can not interpret the results of the encoder to gain something useful. Only the network itself could understand what they really are lol.
+When we input the images into the neural network, it extracts features spontaneously. This behavior is "encapsulated" inside the neural network so we don't know exactly what feature it extracts from this image, eg. number, stroke , actually the features are usually more uninterpretable than these in the real world. We can only tell the network whether the classification result is correct/incorrect and to which extent it is correct/incorrect. According to our instructions, it further extracts the features from the images and makes decisions based on these features. This feature is an estimated distribution of latent variables and this process of getting the feature is called **encode**. Note that the example above is just given to make the concept easy to understand. In the real world, people usually cannot interpret the results of the encoder to gain something useful. Only the network itself could understand what they really are lol.
 
-After learning for some epochs, we'd like to train a neural network that is able to generate an image itself. To achieve this goal, the trained neural network would sample from the previously generated distribution, an estimation of the latent variables, to generate an image that it believes to follow the distribution formed by the whole image space. Again, just for making it easier to understand, we can assume that a "smart" enough network could find the latent space where each element in the space correpspond to a number in 0-9. It would first pick a number in 0-9, say 6, and then generate an estimation of the latent variable correspond to 6. After that, according the generated distribution, it can estimate the real distribution of the images denoting 6 and give us an image sampled from that distritbution. This process of estimating the real distribution according the approximation of latent variables, is called **decode**.
+We'd like to train a neural network that is able to generate an image itself. To achieve this goal, the trained neural network would sample from the previously generated distribution, an estimation of the latent variables, to generate an image that it believes to follow the distribution formed by the whole image space. Again, just for making it easier to understand, let's assume a "smart" enough network. It is "smart" enough to find the latent space where each element in the space correpspond to a number in 0-9. To generate an image, it would first pick a number in 0-9, say 6, and then generate an estimation of the latent variable correspond to 6. After that, according the generated distribution, it can estimate the real distribution of the images denoting 6 and give us an image sampled from that distritbution. This process of estimating the real distribution according to the approximation of latent variables, is called **decode**.
 
 
 
 ## 2. Generative Models
 
-VAE(Variational AutoEncoders) is a Generative Model. In the problem of classification, generative models forms the joint distribution of $$P(\mathbf{X},Y)$$, where $$\mathbf{X}$$ represents data points, treated as a random vector and Y represents labels, treated as a random variable. 
+VAE(Variational AutoEncoders) is a Generative Model. In the problem of classification, generative model forms the joint distribution of $$P(\mathbf{X},Y)$$, where $$\mathbf{X}$$ represents data points, treated as a random vector and Y represents labels, treated as a random variable. 
 
 In the problem of **VAE**, the Generative Model, which is VAE iteself, forms $$P(\mathbf{X})$$:
 
@@ -45,21 +45,21 @@ $$
 
 where $$z$$ is a latent variable, formed by training the neural network; $$\theta$$ is a parameter of the PDF of $$X\vert z$$
 
-The target of this problem is to build a model and then optimize over $$\theta$$ to maximize the likelihood of the given data is generated by our model. This is MLE(Maximum Likelihood Estimation). If the likelihood of the training data is maximized, we could believe that it is able to generate the data from the real underlying distribution.
+The target of this problem is to build a model and then optimize over $$\theta$$ to maximize the likelihood of the training data is generated by our model. This is **MLE**(Maximum Likelihood Estimation). If the likelihood of the training data is large enough, we could believe that it is able to generate the data from the real underlying distribution.
 
 
 
-If $$P(\mathbf{X}\vert z)$$ is an arbitrary probability distribution, obviously it is not possible to train over it. So in *VAE*, it is assumed that $$P(\mathbf{X}\vert  z)$$ is a Gaussian distribution $$\mathcal{N}(f(z;\theta),\sigma^2 I )$$ where $$f(z;\theta)$$ is a function about latent variable $$z$$ taking $$\theta$$ as parameter and usually is composed of one or more layers of neural network.
+If $$P(\mathbf{X}\vert z)$$ is an arbitrary probability distribution, obviously it is not possible to train over it. So in *VAE*, it is assumed that $$P(\mathbf{X}\vert  z)$$ is a Gaussian distribution $$\mathcal{N}(f(z;\theta),\sigma^2 I )$$ where $$f(z;\theta)$$ is a function about latent variable $$z$$ taking $$\theta$$ as its parameters and usually is composed of one or more layers of neural network.
 
 ## 3. Variational AutoEncoders
 
 ### 3.1 Latent Variables in AutoEncoders
 
-The first thing to be solved is how we should choose the distribution which is used to approximate the distribution of the latent variables? Here we simply assume that the latent variables follow the standard Gaussian distribution $$\mathcal{N}(0, I )$$. We can safely take this assumption since for each d-dimensional random variable, one could approximate its PDF by inputting d 1-dimensional Gaussian distribution random variable through a complex enough function(https://informs-sim.org/wsc86papers/1986_0039.pdf) . As a neural network is an universal function approximator, i.e. for any continuous function, there exists a neural network with one hidden layer containing finitely many nodes that is able to approximate it. Therefore, technically, it is feasible to estimate the latent variable using a random variable following Gaussian distribution.
+The first thing to be solved is how we should choose the distribution which is used to approximate the distribution of the latent variables? Here it is simply assumed that the latent variables follow the standard Gaussian distribution $$\mathcal{N}(0, I )$$. We can safely take this assumption since for each d-dimensional random variable, one could approximate its PDF by inputting d 1-dimensional Gaussian distribution random variable through a complex enough function(https://informs-sim.org/wsc86papers/1986_0039.pdf) . As a neural network is an universal function approximator, i.e. for any continuous function, there exists a neural network with one hidden layer containing finitely many nodes that is able to approximate it. Therefore, technically, it is feasible to estimate the latent variables using a series of random variable following Gaussian distribution.
 
 ### 3.2 An Intuitive Way
 
-After figuring out the problem of latent variable, we need to design an Objective Function to maximize $$P(\mathbf{X})$$ and then optimize over it using SGD(Stochastic Gradient Descent).
+After figuring out the problem of latent variables, we need to design an Objective Function to maximize $$P(\mathbf{X})$$ and then optimize over it using SGD(Stochastic Gradient Descent).
 
 An intuitive way is to use mean to approximate the expectation.
 
@@ -87,24 +87,24 @@ P(X)\approx \frac{1}{n}\sum_i P(X|z_i)
 $$
 
 
-where we assume $$p(z_i) = \frac{1}{n}$$
+where it implicitly assumes that $$p(z_i) = \frac{1}{n}$$
 
-But actually this method doesn't actually work because it requires a huge numer of data points to approximate the expectation and incurs a large computation overhead. For more information in: arXiv:1606.05908 (2016)
+But this method doesn't work because it requires a huge number of data points to approximate the expectation and incurs a large computation overhead. For more information please refer to: arXiv:1606.05908 (2016)
 
-Therefore, we need figure out another way.
+Therefore, we need to figure out another method.
 
 ### 3.3 Setting Up the Objective Function
-The reason why the previous method doesn't work is it requires too many data points. For the majority of the $$z_i$$'s sampled from standard Gaussian distribution, $$P(X \vert  z_i)\approx 0$$ which has nearly no impact over $$P(\mathbf{X})$$, having low data efficiency. So a natural consideration is that can we get a conditional pdf $$Q(z\vert X)$$yielding high data efficiency of sampling $$z$$ from it and we could calculate $$\mathbb{E}_{z}[P(X\vert z)]$$ more efficiently with it.
+The reason why the previous method doesn't work is it requires too many data points. For the majority of the $$z_i$$'s sampled from standard Gaussian distribution, $$P(X \vert  z_i)\approx 0$$ which has nearly no impact over $$P(\mathbf{X})$$, resulting in low data efficiency. So a natural consideration is whether we can get a conditional pdf $$Q(z\vert X)$$yielding high data efficiency of sampling $$z$$ from it. With this $$Q(z\vert X)$$, we could calculate $$\mathbb{E}_{z}[P(X\vert z)]$$ more efficiently.
 
 
 
-But how we can get $$Q(z\vert X)$$?
+But how can we get $$Q(z\vert X)$$?
 
 
 
-We hope that $$ Q(z\vert X)$$could approximate $$P(z\vert X)$$ as well as possible. One of the most common metric of the distance between two probability distributions is KL-Divergence.(Note that KL-Divergence is asymmetric).
+We hope $$ Q(z\vert X)$$ to approximate $$P(z\vert X)$$ as well as possible. One of the most common metric of the distance between two probability distributions is KL-Divergence.
 
-KL-Divergence
+**KL-Divergence**
 
 
 $$
@@ -112,7 +112,7 @@ $$
 $$
 
 
-However, what we really care about is the probability of $$X$$, which is given in the equation. We can use Bayes' rule to change its position:
+However, what we really care about is the probability of $$X$$, which is conditioned in the equation. So we need to use Bayes' rule to change its position:
 $$
 \begin{aligned}
 \mathcal{D}[Q(z|X)||P(z|X)] &= \mathbb{E}_{z\sim Q}[log(Q(z|X))]-\mathbb{E}_{z\sim Q}[log(P(z|X)]\\
@@ -124,7 +124,7 @@ Aha, here they are: $$P(X), \; P(X \vert z)$$
 
 
 
-Our target is to $$\max P(X)$$ and we need to $$\min \mathcal{D}[Q(z\vert X)\vert \vert P(z \vert X)]$$ to approximate the expectation. Unfortunately, it is impossible to optimize over it since we don't know $$P(z \vert X)$$. 
+Remember our target is to $$\max P(X)$$ as well as $$\min \mathcal{D}[Q(z\vert X)\vert \vert P(z \vert X)]$$ to approximate the expectation. Unfortunately, it is impossible to optimize over the RHS of the above equation since we don't know $$P(z \vert X)$$. 
 
 
 
@@ -148,7 +148,7 @@ This equation would be involved throughout VAE:
 $$log(P(X))-\mathcal{D}[Q(z|X)||P(z|X)]  = \mathbb{E}_{z\sim Q}[log(P(X|z)]-\mathcal{D}[Q(z|X)||P(z)]$$
 
 ### 3.4 Optimizing the Objective Function
-Similar to the previous mentioned, $$Q(z|X)$$ couldn't be an arbitrary distribution and we need some parameters to restrict it to a specific distribution. Assume that $$Q(z|X)$$ is a Gaussian distribution: $$\mathcal{N(}\mu(X),\Sigma(X))$$. What we actually models through the neural network is its mean and variance.
+Similar to the previous section, $$Q(z|X)$$ couldn't be an arbitrary distribution and we need some parameters to restrict it to a specific distribution. Assume that $$Q(z|X)$$ is a Gaussian distribution: $$\mathcal{N(}\mu(X),\Sigma(X))$$. What we actually models through the neural network is its mean and variance.
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200322123252187.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjYwNDcxMw==,size_16,color_FFFFFF,t_70)
 Therefore, we have:
@@ -156,7 +156,7 @@ $$
 \mathcal{D}[Q(z|X)||P(z)] = \mathcal{D}[\mathcal{N}(\mu,\Sigma)||\mathcal{N}(0,I)]
 $$
 #### 3.4.1 KL-Divergence of Two Multi-Variate Gaussians
-Then a math problem comes, how to calculate the KL-Divergence of multivariate Gaussian distribution?
+Then a math problem comes, how to calculate the KL-Divergence of two multivariate Gaussians?
 $$
 \begin{aligned}
 \mathcal{D}[\mathcal{N}(\mu,\Sigma)||\mathcal{N}(0,I)] &= \mathbb{E}[log(det(\Sigma)^{-0.5}(\sqrt{2\pi})^{-k}exp\{-\frac{1}{2}(x-\mu)^T\Sigma ^{-1}(x-\mu ){}\})-log((\sqrt{2\pi})^{-k}exp\{-\frac{1}{2}x^Tx\}]\\
@@ -166,16 +166,16 @@ $$
 \end{aligned}
 $$
 #### 3.4.2 Gradient
-Before we could optimize over it using SGD, we have to solve the second problem. How to calculate  $$\mathbb{E}_{z\sim Q}[log(P(X|z)]$$? Similar to SGD, we sample a $$z$$ from $$Q$$ and calculate $$log(P(X|z)$$. Taking it as the expectation, which is similar to SGD with mini-batch of size 1, we can optimize over the objective using SGD. We can enlarge the size of the mini-batch: taking an arbitrary number of $$X$$,$$z$$, calulating the gradient and taking the average.
+Before we could optimize over it using SGD, a second problem has to be solved: how to calculate  $$\mathbb{E}_{z\sim Q}[log(P(X|z)]$$? Similar to SGD, a $$z$$ is sampled from $$Q$$ and is used for calculating $$log(P(X\vert z))$$. It is taken as $$\mathbb{E}_{z\sim Q}[log(P(X|z)]$$, which is similar to SGD with mini-batch of size 1. Then it is feasible to optimize over the objective using SGD. Also, we can enlarge the size of the mini-batch: taking an arbitrary number of $$X$$,$$z$$, calulating the gradient and taking the average.
 
 #### 3.4.3 BackPropagation and Reparameterization Trick
-However, in order to optimize with a neural network, we need to pass gradients using back propagation. We take a shortcut in the previous section that we calculate gradients through sampling from a distribution. What makes things complicated is that gradient cannot be propagated through an operation of random sampling because there is no dependency. Here comes an extremely cool idea: Reparameterization Trick.
+However, in order to optimize with a neural network, gradients need to be passed backwards using back propagation. We took a shortcut in the previous section that we calculate gradients through sampling from a distribution. What makes things complicated is that gradient cannot be propagated through an operation of random sampling because there is no dependency. Here comes an extremely cool idea: Reparameterization Trick.
 
-We know that for any gaussian distribution, we can reformulate it into a function of standard gaussian:
+For any gaussian distribution, we can reformulate it into a function of standard gaussian:
 $$
 Q(z|X) = \mu+\Sigma^{\frac{1}{2}} \mathcal{N}(0,I)
 $$
-What we actually need to propagate is the gradient w.r.t $$\mu,\Sigma$$ - we don't care about the gradient w.r.t the Gaussian distribution at all! It is the randomness of this opeartion that prevents the network from  propagating the gradient through it. From the above equation, we can separate the randomness of this operation out of the path of propagating the gradient. It is very abstract by just describing it, let's look at a figure: 
+What we actually need to propagate is the gradient w.r.t $$\mu,\Sigma$$ - we don't care about the gradient w.r.t the Gaussian distribution at all! It is the randomness of this opeartion that prevents the network from  propagating the gradient through it. From the above equation, we can separate the randomness of this operation out of the path of propagating the gradient. It is very abstract to just describe it, let's take a look at a figure: 
 
 ![image source: https://arxiv.org/abs/1606.05908](https://img-blog.csdnimg.cn/20200322132625223.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjYwNDcxMw==,size_16,color_FFFFFF,t_70)
 Marvelous!!!
@@ -209,22 +209,22 @@ $$
 \end{aligned}
 $$
 So $$-\mathbb{E}[log(p(x))]$$ is actually strictly concave的，then the highest point is achieved when gradient is 0, i.e. the probability of all possible values of $$x$$ is equal to each other.
-What I'd like to convey through the math is that when $$p(x)$$ is uniform, it is most uncertain, i.e.  entropy  is maximum and when the probability of one of the possbile values approximates 1, the entropy approximates its minimum.
+What I'd like to convey through the math is that when $$p(x)$$ is uniform, it is most uncertain, i.e. max entropy when the probability of one of the possbile values approximates 1, the entropy approximates its minimum.
 
-$$-log(P(X))$$ can be viewed as the information required to reconstruct a datapoint(Here is a datapoint is an image) and the RHS considers reconstructing $$X$$ as three steps:
+$$-log(P(X))$$ can be viewed as the information required to reconstruct a datapoint(here a datapoint is an image) and the RHS considers reconstructing $$X$$ as three steps:
 
 
 
-+ Encode $$X$$ to construct the estimation of latent variable $$z$$. In Information Theory, KL-Divergence is viewed as the difference between two probability distributions. We can think of a $$z$$ sampled from $$P(z)$$ as containing no information about $$X$$. (Section 3.2). Therefore, we use the KL-Divergence between $$Q(z\vert X)$$ and $$P(z)$$ to measure how much information is required to construct $$z$$ given an $$X$$
++ Encode $$X$$ to construct the estimation of latent variable $$z$$. In Information Theory, KL-Divergence is viewed as the difference between two probability distributions. We can think of a $$z$$ sampled from $$P(z)$$ as containing no information about $$X$$. (Section 3.2). Therefore, KL-Divergence between $$Q(z \vert X)$$ and $$P(z)$$ can be used to measure how much information is required to construct $$z$$ given an $$X$$.
 
-+ Reconstruct $$X$$ according $$z$$. $$\mathbb{E}_{z\sim Q}[log(P(X \vert z)]$$  can be viewed as the amount information required to reconstruct $$X$$ given $$z$$
++ Reconstruct $$X$$ according to $$z$$. $$\mathbb{E}_{z\sim Q}[log(P(X \vert z)]$$  can be viewed as the amount information required to reconstruct $$X$$ given $$z$$
 
-+ Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say we use some information to estimate $$P(z \vert  X)$$ which is also involved in the whole amount of information to reconstruct the image. So we should extract this part out: $$\mathcal{D}[Q(z \vert X)\vert \vert P(z \vert X)]$$
++ Since we cannot directly estimate $$P(z)$$ to calculate the expectation, we could only estimate $$P(z\vert  X)$$ to calculate the expectation indirectly. That is to say some information is used to estimate $$P(z \vert  X)$$ which is also involved in the whole amount of information to reconstruct the image. So we should extract this part out: $$\mathcal{D}[Q(z \vert X)\vert \vert P(z \vert X)]$$
 
 ### 4.2 Regularization Perspective
-Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X) \vert \vert P(z \vert  X)]$$ as a regularization term? Assume that we actually can take this view, we need to find a hyperparameter of the regularization term.
+Observing the two terms of the LHS of the objective function, it is inevitable to ask a question: Can we view $$-log(P(X))$$ as an objective function and $$\mathcal{D}[Q(z \vert X) \vert \vert P(z \vert  X)]$$ as a regularization term? Assume it is true, we need to find a hyperparameter of the regularization term.
 
-The first idea is that we can take the variance of $$P(z)$$ as a hyperparameter. Actually it is not true. Modifying the variance of $$P(z)$$ cannot change this model since as mentioned in section 3.1, we can map a d-dimensional Gaussian to an arbitrary distribution. Although the real underlying latent variable distribution is not standard Gaussian, we can map a standard Gaussian through the following layer to it.
+The first idea is we can take the variance of $$P(z)$$ as a hyperparameter. Actually modifying the variance of $$P(z)$$ cannot change this model since as mentioned in section 3.1, we can map a d-dimensional Gaussian to an arbitrary distribution. Although the real underlying latent variable distribution is not a standard Gaussian, we can map a standard Gaussian through the following layer to it.
 
 The second idea is now that $$P(\mathbf{X} \vert z)$$ is a Gaussian $$\mathcal{N}(f(z;\theta),\sigma^2 I )$$, can we modify $$\sigma$$ to change this model? If the under the assumption that $$P(\mathbf{X} \vert  z)$$ is a Gaussian distribution, then it is a hyperparameter. But what if we change our assumption?
 
