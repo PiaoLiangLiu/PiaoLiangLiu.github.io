@@ -17,11 +17,11 @@
 
 + Highlevel architecture: single pipeline with skip layers to preserve spatial information at each resolution
 
-<img src="/Users/liushuai/Documents/blog/PiaoLiangLiu.github.io/img/IMG_0353.jpg" style="zoom:50%;" />
+<img src="_postimgs/IMG_0353.jpg" style="zoom:50%;" />
 
-![](/Users/liushuai/Documents/blog/PiaoLiangLiu.github.io/img/IMG_0357.jpg)
+![](_postimgs/IMG_0357.jpg)
 
-![](/Users/liushuai/Documents/blog/PiaoLiangLiu.github.io/img/IMG_0358.jpg)
+![](_postimgs/IMG_0358.jpg)
 
 + multiple hour glass modules stacked together: reevaluation of initial estimates and features across the whole image; predictions generated after being processed in the context of both local and global
 
